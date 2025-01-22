@@ -11,15 +11,27 @@ import {
 import * as bcrypt from 'bcryptjs';
 import { Exclude } from 'class-transformer';
 import { EntityHelper } from './../../common/utils/entity-helper';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export class User extends EntityHelper {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn({ name: 'ID' })
   id: number;
 
+  @ApiProperty({ example: 'johndoe' })
   @Column({ name: 'user_login', length: 60, default: '' })
   @Index('user_login_key')
   userLogin: string;
+
+  @ApiProperty({ example: 'john@example.com' })
+  @Column({ name: 'user_email', length: 100, default: '' })
+  @Index('user_email')
+  email: string;
+
+  @ApiProperty({ example: 'John Doe' })
+  @Column({ name: 'display_name', length: 250, default: '' })
+  displayName: string;
 
   @Column({ name: 'user_pass', length: 255, default: '' })
   @Exclude({ toPlainOnly: true })
@@ -28,10 +40,6 @@ export class User extends EntityHelper {
   @Column({ name: 'user_nicename', length: 50, default: '' })
   @Index('user_nicename')
   userNicename: string;
-
-  @Column({ name: 'user_email', length: 100, default: '' })
-  @Index('user_email')
-  email: string;
 
   @Column({ name: 'user_url', length: 100, default: '' })
   userUrl: string;
@@ -48,9 +56,6 @@ export class User extends EntityHelper {
 
   @Column({ name: 'user_status', type: 'int', default: 0 })
   userStatus: number;
-
-  @Column({ name: 'display_name', length: 250, default: '' })
-  displayName: string;
 
   @BeforeInsert()
   @BeforeUpdate()

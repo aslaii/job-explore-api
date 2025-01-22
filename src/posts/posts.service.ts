@@ -1,5 +1,5 @@
 // src/posts/posts.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
@@ -22,5 +22,22 @@ export class PostsService {
         post_date: 'DESC',
       },
     });
+  }
+
+  async findJobById(id: number): Promise<Post> {
+    const post = await this.postsRepository.findOne({
+      where: {
+        ID: id,
+        post_type: 'job',
+        post_status: 'publish',
+      },
+      relations: ['meta'],
+    });
+
+    if (!post) {
+      throw new NotFoundException(`Job post with ID ${id} not found`);
+    }
+
+    return post;
   }
 }

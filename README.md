@@ -82,18 +82,15 @@ Content-Type: application/json
 }
 ```
 
-# API Documentation
 
-## Job Posts Endpoints
-
-### Get All Job Posts
+#### Get All Job Posts
 
 ```http
 GET /api/client/posts/jobs
 Authorization: Bearer {token}
 ```
 
-#### Query Parameters
+##### Query Parameters
 
 | Parameter  | Type     | Default  | Description                                           |
 |------------|----------|----------|-------------------------------------------------------|
@@ -104,13 +101,13 @@ Authorization: Bearer {token}
 | sortBy     | string   | post_date| Sort field: 'post_date', 'post_title'               |
 | sortOrder  | string   | DESC     | Sort direction: 'ASC', 'DESC'                       |
 
-#### Example Request
+##### Example Request
 
 ```http
 GET /api/client/posts/jobs?search=developer&status=publish&page=1&limit=10&sortBy=post_date&sortOrder=DESC
 ```
 
-#### Example Response
+##### Example Response
 
 ```json
 {
@@ -138,7 +135,7 @@ GET /api/client/posts/jobs?search=developer&status=publish&page=1&limit=10&sortB
 }
 ```
 
-#### Response Codes
+##### Response Codes
 
 | Status | Description           |
 |--------|-----------------------|
@@ -154,13 +151,13 @@ GET /api/client/posts/jobs/{id}
 Authorization: Bearer {token}
 ```
 
-#### Parameters
+##### Parameters
 
 | Parameter | Type     | Description     |
 |-----------|----------|-----------------|
 | id        | number   | Job post ID     |
 
-#### Example Response
+##### Example Response
 
 ```json
 {
@@ -185,7 +182,7 @@ Authorization: Bearer {token}
 }
 ```
 
-#### Response Codes
+##### Response Codes
 
 | Status | Description           |
 |--------|-----------------------|
@@ -195,18 +192,12 @@ Authorization: Bearer {token}
 | 404    | Job not found        |
 | 500    | Server error         |
 
-## Features
+### Features
 
 - **Search**: Full-text search in job titles and content
 - **Filtering**: Filter by post status
 - **Pagination**: Page-based pagination with customizable limits
 - **Sorting**: Sort by date or title in ascending or descending order
-- **Mobile Optimized**: 
-  - Compressed responses
-  - Optimized payloads
-  - Responsive images
-  - Caching support
-  - Field selection
 
 ## Project Structure
 

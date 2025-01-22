@@ -1,5 +1,7 @@
 # Job Explorer API
 
+![API Demo](./API%20Picture%20Demo.png)
+
 A NestJS-based REST API for job exploration platform with authentication and job posting features.
 
 ## Prerequisites

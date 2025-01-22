@@ -1,8 +1,9 @@
 // src/posts/posts.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, ILike, Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
+import { FindJobsDto } from './dto/find-jobs.dto';
 
 @Injectable()
 export class PostsService {
@@ -11,17 +12,57 @@ export class PostsService {
     private postsRepository: Repository<Post>,
   ) {}
 
-  async findJobs(): Promise<Post[]> {
-    return this.postsRepository.find({
-      where: {
-        post_type: 'job',
-        post_status: 'publish',
-      },
+  async findJobs(queryParams: FindJobsDto) {
+    const {
+      search,
+      status,
+      page = 1,
+      limit = 10,
+      sortBy = 'post_date',
+      sortOrder = 'DESC',
+    } = queryParams;
+
+    // Build where conditions
+    const where: FindOptionsWhere<Post> = {
+      post_type: 'job',
+    };
+
+    if (status) {
+      where.post_status = status;
+    } else {
+      where.post_status = 'publish'; // Default to published posts
+    }
+
+    if (search) {
+      where.post_title = ILike(`%${search}%`);
+    }
+
+    // Calculate skip for pagination
+    const skip = (page - 1) * limit;
+
+    // Get total count for pagination
+    const total = await this.postsRepository.count({ where });
+
+    // Get paginated results
+    const posts = await this.postsRepository.find({
+      where,
       relations: ['meta'],
       order: {
-        post_date: 'DESC',
+        [sortBy]: sortOrder,
       },
+      skip,
+      take: limit,
     });
+
+    return {
+      data: posts,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findJobById(id: number): Promise<Post> {

@@ -7,7 +7,6 @@ A NestJS-based REST API for job exploration platform with authentication and job
 - Node.js (>=16.x)
 - MySQL (>=8.0)
 - npm or bun package manager
-- Docker (optional)
 
 ## Project Setup
 
@@ -113,23 +112,18 @@ src/
 1. **Authentication**
    - User registration and login
    - JWT-based authentication
-   - Role-based access control
 
 2. **Job Posts**
-   - Create, read, update, and delete job posts
    - Search and filter functionality
    - Pagination support
 
 3. **Mobile App Integration**
    - Dedicated endpoints for mobile app
    - Optimized response formats
-   - Push notification support
 
 ## Security Features
 
 - JWT Authentication
 - Input validation
 - Rate limiting
-- CORS protection
-- Helmet security headers
 

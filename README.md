@@ -141,7 +141,6 @@ GET /api/client/posts/jobs?search=developer&status=publish&page=1&limit=10&sortB
 |--------|-----------------------|
 | 200    | Success              |
 | 400    | Invalid parameters   |
-| 401    | Unauthorized         |
 | 500    | Server error         |
 
 ### Get Job Post Details
@@ -188,11 +187,10 @@ Authorization: Bearer {token}
 |--------|-----------------------|
 | 200    | Success              |
 | 400    | Invalid ID format    |
-| 401    | Unauthorized         |
 | 404    | Job not found        |
 | 500    | Server error         |
 
-### Features
+#### Features
 
 - **Search**: Full-text search in job titles and content
 - **Filtering**: Filter by post status

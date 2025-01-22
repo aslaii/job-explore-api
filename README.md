@@ -82,19 +82,131 @@ Content-Type: application/json
 }
 ```
 
-### Job Posts
+# API Documentation
 
-#### Get All Posts
+## Job Posts Endpoints
+
+### Get All Job Posts
+
 ```http
-GET /posts
+GET /api/client/posts/jobs
 Authorization: Bearer {token}
 ```
 
-#### Get Single Post
+#### Query Parameters
+
+| Parameter  | Type     | Default  | Description                                           |
+|------------|----------|----------|-------------------------------------------------------|
+| search     | string   | -        | Search in job titles (e.g. "developer")              |
+| status     | string   | publish  | Filter by status: 'publish', 'draft', 'private'      |
+| page       | number   | 1        | Page number for pagination                           |
+| limit      | number   | 10       | Number of items per page (max: 100)                 |
+| sortBy     | string   | post_date| Sort field: 'post_date', 'post_title'               |
+| sortOrder  | string   | DESC     | Sort direction: 'ASC', 'DESC'                       |
+
+#### Example Request
+
 ```http
-GET /posts/{id}
+GET /api/client/posts/jobs?search=developer&status=publish&page=1&limit=10&sortBy=post_date&sortOrder=DESC
+```
+
+#### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Senior Developer",
+      "excerpt": "We are looking for a senior developer...",
+      "date": "2024-01-23T00:00:00.000Z",
+      "meta": {
+        "salary": "100,000 - 120,000 / year",
+        "experience": "5 years",
+        "company_id": 123,
+        "cover_image": "http://api.example.com/media/456/thumbnail",
+        "valid_until": "2024-02-23"
+      }
+    }
+  ],
+  "meta": {
+    "total": 50,
+    "page": 1,
+    "limit": 10,
+    "totalPages": 5
+  }
+}
+```
+
+#### Response Codes
+
+| Status | Description           |
+|--------|-----------------------|
+| 200    | Success              |
+| 400    | Invalid parameters   |
+| 401    | Unauthorized         |
+| 500    | Server error         |
+
+### Get Job Post Details
+
+```http
+GET /api/client/posts/jobs/{id}
 Authorization: Bearer {token}
 ```
+
+#### Parameters
+
+| Parameter | Type     | Description     |
+|-----------|----------|-----------------|
+| id        | number   | Job post ID     |
+
+#### Example Response
+
+```json
+{
+  "id": 1,
+  "author": 1,
+  "date": "2024-01-23T00:00:00.000Z",
+  "title": "Senior Developer",
+  "content": "<p>Detailed job description...</p>",
+  "excerpt": "We are looking for a senior developer...",
+  "status": "publish",
+  "type": "job",
+  "meta": {
+    "salary": "100,000 - 120,000 / year",
+    "experience": "5 years",
+    "company_id": 123,
+    "cover_image": "http://api.example.com/media/456/thumbnail",
+    "valid_until": "2024-02-23",
+    "benefits": ["Medical", "401k", "Remote Work"],
+    "job_location": "New York, NY",
+    "employment_type": "Full-time"
+  }
+}
+```
+
+#### Response Codes
+
+| Status | Description           |
+|--------|-----------------------|
+| 200    | Success              |
+| 400    | Invalid ID format    |
+| 401    | Unauthorized         |
+| 404    | Job not found        |
+| 500    | Server error         |
+
+## Features
+
+- **Search**: Full-text search in job titles and content
+- **Filtering**: Filter by post status
+- **Pagination**: Page-based pagination with customizable limits
+- **Sorting**: Sort by date or title in ascending or descending order
+- **Mobile Optimized**: 
+  - Compressed responses
+  - Optimized payloads
+  - Responsive images
+  - Caching support
+  - Field selection
 
 ## Project Structure
 

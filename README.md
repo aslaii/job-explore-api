@@ -117,10 +117,6 @@ src/
    - Search and filter functionality
    - Pagination support
 
-3. **Mobile App Integration**
-   - Dedicated endpoints for mobile app
-   - Optimized response formats
-
 ## Security Features
 
 - JWT Authentication
